@@ -7,6 +7,8 @@ else
   VERSION=$1
 fi
 
+MESSAGE=${2:-"Version $VERSION"}
+
 # Check that files are committed
 if [[ $(git status --short | egrep "^.M") != "" ]]; then 
   echo "Please stage, stash, or commit changes to tracked files."
@@ -22,7 +24,7 @@ git commit -m "Version $VERSION"
 echo "commit: $(git rev-parse HEAD)" >> VERSION
 git add -u
 git commit --amend --no-edit
-git tag -a "v$VERSION"
+git tag -a "v$VERSION" -m "$MESSAGE"
 git push
 git push --tags
 
